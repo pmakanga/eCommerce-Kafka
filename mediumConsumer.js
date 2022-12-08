@@ -43,20 +43,20 @@ const processConsumer  = async () => {
             paymentCounter++;
         },
     });
-    // await notificationsConsumer.run({
-    //     eachMessage: async ({ topic, partition, message }) => {
-    //         logMessage(notificationCounter, `notificationsConsumer#${consumerNumber}`, topic, partition, message);
-    //         notificationCounter++;
-    //     },
-    // });
-    // re-introduce an error for to force retries on kafka
     await notificationsConsumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-            throw new Error('some error got in the way which didnt let the message be consumed successfully');
             logMessage(notificationCounter, `notificationsConsumer#${consumerNumber}`, topic, partition, message);
             notificationCounter++;
         },
     });
+    // re-introduce an error for to force retries on kafka
+    // await notificationsConsumer.run({
+    //     eachMessage: async ({ topic, partition, message }) => {
+    //         throw new Error('some error got in the way which didnt let the message be consumed successfully');
+    //         logMessage(notificationCounter, `notificationsConsumer#${consumerNumber}`, topic, partition, message);
+    //         notificationCounter++;
+    //     },
+    // });
 
 };
 
